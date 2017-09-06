@@ -27,9 +27,11 @@ var TwilioRequestSignature = function() {
     var sig = request.url;
     var params = request.getUrlEncodedBody();
 
-    Object.keys(params).sort().forEach(function(key) {
-      sig = sig + key + params[key];
-    });
+    if(params){
+      Object.keys(params).sort().forEach(function(key) {
+        sig = sig + key + params[key];
+      });
+    }
 
     var sha1_sig = CryptoJS.HmacSHA1(sig, this.auth_token);
     var base64_sha1_sig = sha1_sig.toString(CryptoJS.enc.Base64);
